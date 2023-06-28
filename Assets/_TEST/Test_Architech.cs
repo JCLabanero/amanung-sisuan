@@ -22,7 +22,7 @@ namespace TESTING
         {
             ds = DialogueSystem.instance;
             architech = new TextArchitech(ds.dialogueContainer.dialoguetext);
-            architech.buildMethod = TextArchitech.BuildMethod.typewriter;
+            architech.buildMethod = TextArchitech.BuildMethod.fade;
             architech.speed = 0.5f;
         }
 
@@ -36,7 +36,7 @@ namespace TESTING
                     if(!architech.isInHurry)
                         architech.isInHurry = true;
                     else
-                        architech.ForceComplete();
+                    architech.ForceComplete();
                 } else
                     architech.Build(lines[Random.Range(0, lines.Length)]);
             }
