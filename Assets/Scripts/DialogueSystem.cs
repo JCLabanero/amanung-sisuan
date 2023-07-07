@@ -3,31 +3,34 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class DialogueSystem : MonoBehaviour
+namespace DIALOGUE
 {
-    public DialogueContainer dialogueContainer = new DialogueContainer();
-    /// <summary>
-    /// Singleton
-    /// </summary>
-    /// <param name="text"></param>
-    /// <return></return>
-    public static DialogueSystem instance;
-    void Awake()
+    public class DialogueSystem : MonoBehaviour
     {
-        if(instance==null)
-            instance = this;
-        else
-            DestroyImmediate(gameObject);
-    }
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+        public DialogueContainer dialogueContainer = new DialogueContainer();
+        /// <summary>
+        /// Singleton
+        /// </summary>
+        /// <param name="text"></param>
+        /// <return></return>
+        public static DialogueSystem instance;
+        void Awake()
+        {
+            if (instance == null)
+                instance = this;
+            else
+                DestroyImmediate(gameObject);
+        }
+        // Start is called before the first frame update
+        void Start()
+        {
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        }
+
+        // Update is called once per frame
+        void Update()
+        {
+
+        }
     }
 }

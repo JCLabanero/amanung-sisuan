@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DIALOGUE;
 
 namespace TESTING
 {
@@ -29,20 +30,21 @@ namespace TESTING
         // Update is called once per frame
         void Update()
         {
-            if(Input.GetKeyDown(KeyCode.Space))
+            if (Input.GetKeyDown(KeyCode.Space))
             {
-                if(architech.isBuilding)
+                if (architech.isBuilding)
                 {
-                    if(!architech.isInHurry)
+                    if (!architech.isInHurry)
                         architech.isInHurry = true;
                     else
-                    architech.ForceComplete();
-                } else
+                        architech.ForceComplete();
+                }
+                else
                     architech.Build(lines[Random.Range(0, lines.Length)]);
             }
-            else if(Input.GetKeyDown(KeyCode.A))
+            else if (Input.GetKeyDown(KeyCode.A))
             {
-                architech.Append(lines[Random.Range(0,lines.Length)]);
+                architech.Append(lines[Random.Range(0, lines.Length)]);
             }
         }
     }
