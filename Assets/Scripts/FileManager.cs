@@ -39,7 +39,7 @@ public class FileManager
         return ReadTextAsset(asset, includeBlankLines);
     }
 
-    public static List<string> ReadTextAsset(TextAsset asset, bool includeBlankLines=true)
+    public static List<string> ReadTextAsset(TextAsset asset, bool includeBlankLines = true)
     {
         List<string> lines = new List<string>();
         using (StringReader sr = new StringReader(asset.text))

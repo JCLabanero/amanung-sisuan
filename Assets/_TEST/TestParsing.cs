@@ -16,7 +16,7 @@ namespace TESTING
 
         void SendFileToParse()
         {
-            List<string> lines = FileManager.ReadTextAsset(file);
+            List<string> lines = FileManager.ReadTextAsset("testFile");
             foreach (string line in lines)
             {
                 if (line == string.Empty)
