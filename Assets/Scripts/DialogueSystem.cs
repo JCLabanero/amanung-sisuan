@@ -7,28 +7,43 @@ namespace DIALOGUE
 {
     public class DialogueSystem : MonoBehaviour
     {
-        public DialogueContainer dialogueContainer = new DialogueContainer();
+        public ContainerDialogue containerDialogue = new ContainerDialogue();
+        private ManagerConversation conversationManager;
+        private TextArchitech architech;
         /// <summary>
         /// Singleton
         /// </summary>
         /// <param name="text"></param>
         /// <return></return>
         public static DialogueSystem instance;
+
+        public bool isRunningConversation => conversationManager.isRunning;
         void Awake()
         {
             if (instance == null)
+            {
                 instance = this;
+                Initialize();
+            }
             else
                 DestroyImmediate(gameObject);
         }
-        // Start is called before the first frame update
-        void Start()
+        bool _initialized = false;
+        private void Initialize()
         {
-
+            if (_initialized)
+                return;
+            architech = new TextArchitech(containerDialogue.dialogueText);
+            conversationManager = new ManagerConversation(architech);
         }
-
-        // Update is called once per frame
-        void Update()
+        public void ShowSpeakerName(string speakerName = "") => containerDialogue.containerName.Show(speakerName);
+        public void HideSpeakerName() => containerDialogue.containerName.Hide();
+        public void Say(string speaker, string dialogue)
+        {
+            List<string> conversation = new List<string>() { $"{speaker} \"{dialogue}" };
+            Say(conversation);
+        }
+        public void Say(List<string> conversation)
         {
 
         }

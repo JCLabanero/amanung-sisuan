@@ -22,7 +22,7 @@ namespace TESTING
         void Start()
         {
             ds = DialogueSystem.instance;
-            architech = new TextArchitech(ds.dialogueContainer.dialoguetext);
+            architech = new TextArchitech(ds.containerDialogue.dialogueText);
             architech.buildMethod = TextArchitech.BuildMethod.fade;
             architech.speed = 0.5f;
         }

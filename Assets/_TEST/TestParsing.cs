@@ -7,7 +7,6 @@ namespace TESTING
 {
     public class TestParsing : MonoBehaviour
     {
-        [SerializeField] private TextAsset file;
         // Start is called before the first frame update
         void Start()
         {
