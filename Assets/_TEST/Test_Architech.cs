@@ -5,10 +5,10 @@ using DIALOGUE;
 
 namespace TESTING
 {
-    public class Test_Architech : MonoBehaviour
+    public class Test_Architect : MonoBehaviour
     {
         DialogueSystem ds;
-        TextArchitech architech;
+        TextArchitect architect;
 
         string[] lines = new string[5]
         {
@@ -22,9 +22,9 @@ namespace TESTING
         void Start()
         {
             ds = DialogueSystem.instance;
-            architech = new TextArchitech(ds.containerDialogue.dialogueText);
-            architech.buildMethod = TextArchitech.BuildMethod.fade;
-            architech.speed = 0.5f;
+            architect = new TextArchitect(ds.containerDialogue.dialogueText);
+            architect.buildMethod = TextArchitect.BuildMethod.fade;
+            architect.speed = 0.5f;
         }
 
         // Update is called once per frame
@@ -32,19 +32,19 @@ namespace TESTING
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                if (architech.isBuilding)
+                if (architect.isBuilding)
                 {
-                    if (!architech.isInHurry)
-                        architech.isInHurry = true;
+                    if (!architect.isInHurry)
+                        architect.isInHurry = true;
                     else
-                        architech.ForceComplete();
+                        architect.ForceComplete();
                 }
                 else
-                    architech.Build(lines[Random.Range(0, lines.Length)]);
+                    architect.Build(lines[Random.Range(0, lines.Length)]);
             }
             else if (Input.GetKeyDown(KeyCode.A))
             {
-                architech.Append(lines[Random.Range(0, lines.Length)]);
+                architect.Append(lines[Random.Range(0, lines.Length)]);
             }
         }
     }

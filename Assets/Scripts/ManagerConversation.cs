@@ -9,10 +9,10 @@ namespace DIALOGUE
         private DialogueSystem dialogueSystem => DialogueSystem.instance;
         private Coroutine process = null;
         public bool isRunning => process != null;
-        private TextArchitech architech = null;
-        public ManagerConversation(TextArchitech architech)
+        private TextArchitect architect = null;
+        public ManagerConversation(TextArchitect architect)
         {
-            this.architech = architech;
+            this.architect = architect;
         }
         public void StartConversation(List<string> conversation)
         {
@@ -40,8 +40,8 @@ namespace DIALOGUE
                 dialogueSystem.ShowSpeakerName(line.speaker);
             else
                 dialogueSystem.HideSpeakerName();
-            architech.Build(line.dialogue);
-            while (architech.isBuilding)
+            architect.Build(line.dialogue);
+            while (architect.isBuilding)
                 yield return null;
         }
         IEnumerator Line_RunCommands(DIALOGUE_LINE line)
@@ -53,6 +53,8 @@ namespace DIALOGUE
         {
             if (!isRunning)
                 return;
+            dialogueSystem.StopCoroutine(process);
+            process = null;
         }
     }
 }

@@ -9,7 +9,7 @@ namespace DIALOGUE
     {
         public ContainerDialogue containerDialogue = new ContainerDialogue();
         private ManagerConversation conversationManager;
-        private TextArchitech architech;
+        private TextArchitect architect;
         /// <summary>
         /// Singleton
         /// </summary>
@@ -33,19 +33,19 @@ namespace DIALOGUE
         {
             if (_initialized)
                 return;
-            architech = new TextArchitech(containerDialogue.dialogueText);
-            conversationManager = new ManagerConversation(architech);
+            architect = new TextArchitect(containerDialogue.dialogueText);
+            conversationManager = new ManagerConversation(architect);
         }
         public void ShowSpeakerName(string speakerName = "") => containerDialogue.containerName.Show(speakerName);
         public void HideSpeakerName() => containerDialogue.containerName.Hide();
         public void Say(string speaker, string dialogue)
         {
-            List<string> conversation = new List<string>() { $"{speaker} \"{dialogue}" };
+            List<string> conversation = new List<string>() { $"{speaker} \"{dialogue}\"" };
             Say(conversation);
         }
         public void Say(List<string> conversation)
         {
-
+            conversationManager.StartConversation(conversation);
         }
     }
 }
