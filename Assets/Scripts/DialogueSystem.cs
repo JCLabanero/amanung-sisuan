@@ -16,8 +16,14 @@ namespace DIALOGUE
         /// <param name="text"></param>
         /// <return></return>
         public static DialogueSystem instance;
-
+        public delegate void DialogueSystemEvent();
+        public event DialogueSystemEvent onUserPrompt_Next;
         public bool isRunningConversation => conversationManager.isRunning;
+        public void OnUserPrompt_Next()
+        {
+            //if null, not gonna trigger
+            onUserPrompt_Next?.Invoke();
+        }
         void Awake()
         {
             if (instance == null)
@@ -36,7 +42,13 @@ namespace DIALOGUE
             architect = new TextArchitect(containerDialogue.dialogueText);
             conversationManager = new ManagerConversation(architect);
         }
-        public void ShowSpeakerName(string speakerName = "") => containerDialogue.containerName.Show(speakerName);
+        public void ShowSpeakerName(string speakerName = "")
+        {
+            if (speakerName.ToLower() != "narrator")
+                containerDialogue.containerName.Show(speakerName);
+            else
+                HideSpeakerName();
+        }
         public void HideSpeakerName() => containerDialogue.containerName.Hide();
         public void Say(string speaker, string dialogue)
         {

@@ -10,9 +10,15 @@ namespace DIALOGUE
         private Coroutine process = null;
         public bool isRunning => process != null;
         private TextArchitect architect = null;
+        private bool userPrompt = false;
         public ManagerConversation(TextArchitect architect)
         {
             this.architect = architect;
+            dialogueSystem.onUserPrompt_Next += OnUserPrompt_Next;
+        }
+        private void OnUserPrompt_Next()
+        {
+            userPrompt = true;
         }
         public void StartConversation(List<string> conversation)
         {
@@ -31,23 +37,43 @@ namespace DIALOGUE
                     yield return Line_RunDialogue(line);
                 if (line.hasCommands)
                     yield return Line_RunDialogue(line);
-                yield return new WaitForSeconds(1);
             }
         }
         IEnumerator Line_RunDialogue(DIALOGUE_LINE line)
         {
             if (line.hasSpeaker)
+            {
                 dialogueSystem.ShowSpeakerName(line.speaker);
+            }
             else
                 dialogueSystem.HideSpeakerName();
-            architect.Build(line.dialogue);
-            while (architect.isBuilding)
-                yield return null;
+            yield return BuildDialogue(line.dialogue);
+            yield return WaitForUserInput();
         }
         IEnumerator Line_RunCommands(DIALOGUE_LINE line)
         {
             Debug.Log(line.commands);
             yield return null;
+        }
+        IEnumerator BuildDialogue(string dialogue)
+        {
+            architect.Build(dialogue);
+            while (architect.isBuilding)
+            {
+                if (userPrompt)
+                {
+                    if (architect.isBuilding)
+                    {
+                        if (!architect.isInHurry)
+                            architect.isInHurry = true;
+                        else
+                            architect.ForceComplete();
+                        userPrompt = false;
+                    }
+                    architect.Build(dialogue);
+                }
+                yield return null;
+            }
         }
         public void StopConversation()
         {
@@ -55,6 +81,12 @@ namespace DIALOGUE
                 return;
             dialogueSystem.StopCoroutine(process);
             process = null;
+        }
+        IEnumerator WaitForUserInput()
+        {
+            while (!userPrompt)
+                yield return null;
+            userPrompt = false;
         }
     }
 }
