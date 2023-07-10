@@ -42,12 +42,8 @@ namespace DIALOGUE
         IEnumerator Line_RunDialogue(DIALOGUE_LINE line)
         {
             if (line.hasSpeaker)
-            {
                 dialogueSystem.ShowSpeakerName(line.speaker);
-            }
-            else
-                dialogueSystem.HideSpeakerName();
-            yield return BuildDialogue(line.dialogue);
+            yield return BuildDialogueSegments(line.dialogue);
             yield return WaitForUserInput();
         }
         IEnumerator Line_RunCommands(DIALOGUE_LINE line)
@@ -55,9 +51,37 @@ namespace DIALOGUE
             Debug.Log(line.commands);
             yield return null;
         }
-        IEnumerator BuildDialogue(string dialogue)
+        IEnumerator BuildDialogueSegments(DIALOGUE_DATA line)
         {
-            architect.Build(dialogue);
+            for (int i = 0; i < line.segments.Count; i++)
+            {
+                DIALOGUE_DATA.DIALOGUE_SEGMENT segment = line.segments[i];
+                yield return WaitForDialogueSegmentSignalToBeTriggered(segment);
+                yield return BuildDialogue(segment.dialogue, segment.appedText);
+            }
+        }
+        IEnumerator WaitForDialogueSegmentSignalToBeTriggered(DIALOGUE_DATA.DIALOGUE_SEGMENT segment)
+        {
+            switch (segment.startSignal)
+            {
+                case DIALOGUE_DATA.DIALOGUE_SEGMENT.StartSignal.C:
+                case DIALOGUE_DATA.DIALOGUE_SEGMENT.StartSignal.A:
+                    yield return WaitForUserInput();
+                    break;
+                case DIALOGUE_DATA.DIALOGUE_SEGMENT.StartSignal.WC:
+                case DIALOGUE_DATA.DIALOGUE_SEGMENT.StartSignal.WA:
+                    yield return new WaitForSeconds(segment.signalDelay);
+                    break;
+                default:
+                    break;
+            }
+        }
+        IEnumerator BuildDialogue(string dialogue, bool append = false)
+        {
+            if (!append)
+                architect.Build(dialogue);
+            else
+                architect.Append(dialogue);
             while (architect.isBuilding)
             {
                 if (userPrompt)

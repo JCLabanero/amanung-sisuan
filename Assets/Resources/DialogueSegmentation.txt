@@ -1,0 +1,5 @@
+John "This changes everything. We're dealing with a whole new level of evil here."
+Partner "I know.{c} It's har to believe that someone could or something...{wa 1} like this."
+John "We needd to fin this killer an put a stop to his experiments.{c} But how o we even begin to track him down?"
+Partner "Maybe we can start by looking at the victims.{wa 1} See if there's any connection between them."
+John "Good idea.{wc 0.5} But we need to be careful. If this guy is experimenting with the supernatural, who knows what kind of powers he might have."
