@@ -36,7 +36,7 @@ namespace DIALOGUE
                 if (line.hasDialogue)
                     yield return Line_RunDialogue(line);
                 if (line.hasCommands)
-                    yield return Line_RunDialogue(line);
+                    yield return Line_RunCommands(line);
             }
         }
         IEnumerator Line_RunDialogue(DIALOGUE_LINE line)
@@ -62,15 +62,11 @@ namespace DIALOGUE
             {
                 if (userPrompt)
                 {
-                    if (architect.isBuilding)
-                    {
-                        if (!architect.isInHurry)
-                            architect.isInHurry = true;
-                        else
-                            architect.ForceComplete();
-                        userPrompt = false;
-                    }
-                    architect.Build(dialogue);
+                    if (!architect.isInHurry)
+                        architect.isInHurry = true;
+                    else
+                        architect.ForceComplete();
+                    userPrompt = false;
                 }
                 yield return null;
             }

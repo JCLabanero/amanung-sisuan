@@ -84,7 +84,7 @@ public class TextArchitect
     private void OnComplete()
     {
         buildProcess = null;
-
+        isInHurry = false;
     }
     public void ForceComplete()
     {
@@ -96,6 +96,8 @@ public class TextArchitect
             case BuildMethod.fade:
                 break;
         }
+        Stop();
+        OnComplete();
     }
     private void Prepare()
     {

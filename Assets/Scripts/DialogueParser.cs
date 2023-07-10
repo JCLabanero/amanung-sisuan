@@ -36,7 +36,7 @@ namespace DIALOGUE
                 else
                     isEscaped = false;
             }
-            Debug.Log(rawLine.Substring(dialogueStart + 1, dialogueEnd - dialogueStart - 1));
+            // Debug.Log(rawLine.Substring(dialogueStart + 1, dialogueEnd - dialogueStart - 1));
             Regex commandRegex = new Regex(commandRegexPattern);
             Match match = commandRegex.Match(rawLine);
             int commandStart = -1;
